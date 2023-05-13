@@ -7,7 +7,7 @@ const config = {
     port: process.env.PORT || 3000,
   },
   database: {
-    mongodb: process.env.MONGO_DB || '',
+    mongodb: `mongodb+srv://${process.env.MONGO_NAME}:${process.env.MONGO_PASSWORD}@cluster0.dxncxjg.mongodb.net/`,
   },
 };
 
