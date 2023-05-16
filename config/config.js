@@ -1,5 +1,4 @@
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 const config = {
   app: {
@@ -7,7 +6,8 @@ const config = {
     port: process.env.PORT || 3000,
   },
   database: {
-    mongodb: `mongodb+srv://${process.env.MONGO_NAME}:${process.env.MONGO_PASSWORD}@cluster0.dxncxjg.mongodb.net/`,
+    name: process.env.MONGO_NAME,
+    password: process.env.MONGO_PASSWORD,
   },
 };
 

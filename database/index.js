@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 const config = require('../config/config');
 
-console.log(config.database.mongodb);
-const conn = mongoose
-  .connect(config.database.mongodb)
-  .then(() => console.log('Mongo server connected'))
-  .catch((err) => console.error(err));
+const mongoUrl = `mongodb+srv://${config.database.name}:${config.database.password}@cluster0.dxncxjg.mongodb.net/${process.env.MONGO_DATABASE}`;
 
-module.exports = conn;
+const connectDb = async () => {
+  try {
+    await mongoose.connect(mongoUrl);
+    console.log('Mongo connection success');
+  } catch (err) {
+    console.error('Mongo connection failed');
+  }
+};
+
+module.exports = connectDb;
