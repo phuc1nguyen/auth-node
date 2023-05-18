@@ -7,14 +7,6 @@ const userService = {
 
   getUserById: async (id) => await User.findById(id),
 
-  createNewUser: async (body) => {
-    const existedUser = await User.findOne({ email: body.email });
-    if (existedUser) {
-      throw new ApiError('Email already existed', httpStatus.BAD_REQUEST);
-    }
-    return await User.create(body);
-  },
-
   updateUserById: async (id, body) =>
     await User.findOneAndUpdate({ _id: id }, body),
 

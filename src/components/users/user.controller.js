@@ -14,12 +14,6 @@ const userController = {
     res.status(httpStatus.OK).json(user);
   }),
 
-  createNewUser: asyncHandler(async (req, res) => {
-    const body = req.body;
-    const newUser = await userService.createNewUser(body);
-    res.status(httpStatus.CREATED).json(newUser);
-  }),
-
   updateUserById: asyncHandler(async (req, res) => {
     const id = req.params.id;
     const body = req.body;

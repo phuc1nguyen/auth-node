@@ -1,5 +1,16 @@
-html
-  head
-    title= title
-  body
-    h1= message
+extends layouts/layout.pug
+
+block content
+  main#main
+    h2 This is the home page
+    if user
+      b Email: 
+      span #{user.email}
+      br
+      b Username: 
+      span #{user.username}
+      form(method='post' action='/api/v1/auth/logout')
+        button(type='submit') Logout
+    else
+      form(method='get' action='/api/v1/auth/login')
+        button(type='submit') Login
