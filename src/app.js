@@ -36,11 +36,17 @@ app.use(passport.session());
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', (req, res) => {
-  if (req.user) console.log(req.user);
-  console.log(req.sessionID);
+app.use((req, res, next) => {
+  // have access currentUser variable in all views without passing it
+  console.log('session ID: ' + req.sessionID);
   console.log(req.session);
-  res.render('index', { title: 'Home', user: req.user });
+  console.log(req.cookies);
+  if (req.user) res.locals.currentUser = req.user;
+  next();
+});
+
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Home' });
 });
 app.use('/api', apiRoutes);
 

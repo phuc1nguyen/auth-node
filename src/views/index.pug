@@ -3,12 +3,12 @@ extends layouts/layout.pug
 block content
   main#main
     h2 This is the home page
-    if user
+    if currentUser
       b Email: 
-      span #{user.email}
+      span #{currentUser.email}
       br
       b Username: 
-      span #{user.username}
+      span #{currentUser.username}
       form(method='post' action='/api/v1/auth/logout')
         button(type='submit') Logout
     else

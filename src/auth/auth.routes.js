@@ -3,6 +3,7 @@ const authController = require('../auth/auth.controller');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../components/users/user.model');
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 passport.use(
@@ -16,7 +17,7 @@ passport.use(
       if (!user) {
         return done(null, false);
       }
-      if (user.password !== password) {
+      if (!bcrypt.compareSync(password, user.password)) {
         return done(null, false);
       }
       return done(null, user);
@@ -39,16 +40,17 @@ passport.deserializeUser(async function (id, done) {
   }
 });
 
-router.get('/login', (req, res) => {
-  res.render('login', { title: 'Login' });
-});
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/api/v1/auth/login',
+router
+  .route('/login')
+  .get((req, res) => {
+    res.render('login', { title: 'Login' });
   })
-);
+  .post(
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/api/v1/auth/login',
+    })
+  );
 router.post('/register', authController.register);
 router.post('/logout', authController.logout);
 
