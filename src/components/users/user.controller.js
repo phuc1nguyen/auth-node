@@ -5,7 +5,13 @@ const userService = require('./user.service');
 const userController = {
   getUsers: asyncHandler(async (req, res) => {
     const users = await userService.getUsers();
-    res.status(httpStatus.OK).json(users);
+    if (req.isAuthenticated()) {
+      return res.status(httpStatus.OK).json(users);
+    }
+
+    return res
+      .status(httpStatus.UNAUTHORIZED)
+      .json({ message: 'Please log in to see this' });
   }),
 
   getUserById: asyncHandler(async (req, res) => {
