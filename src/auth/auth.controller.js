@@ -3,6 +3,11 @@ const asyncHandler = require('../helpers/asyncHandler');
 const httpStatus = require('http-status');
 
 const authController = {
+  login: asyncHandler(async (req, res) => {
+    const data = await authService.login(req.body);
+    res.status(httpStatus.OK).json(data);
+  }),
+
   register: asyncHandler(async (req, res) => {
     const newUser = await authService.register(req.body);
     res.status(httpStatus.CREATED).json(newUser);
